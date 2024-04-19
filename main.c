@@ -7,6 +7,8 @@
 #define KIT_IMPL
 #include "kit.h"
 
+#define app_name "Tents & Trees v1.0.0"
+
 enum
 {
     EMPTY,
@@ -292,9 +294,12 @@ int main()
     int cols = 8;
     int screenw = 200;
     int screenh = 200;
-
-    kit_Context *ctx = kit_create("Tents & Trees", screenw, screenh, KIT_SCALE2X);
+    int appNameW = 0;
     double dt;
+
+    kit_Context *ctx = kit_create(app_name, screenw, screenh, KIT_SCALE2X);
+
+    appNameW = kit_text_width(ctx->font, app_name);
 
     grid_t *grid = grid_new(rows, cols, cellsz, gridx, gridy);
 
@@ -320,7 +325,8 @@ new_game:
     while (kit_step(ctx, &dt))
     {
         kit_clear(ctx, kit_rgba(0, 0, 0, 5));
-        kit_draw_text(ctx, KIT_WHITE, "Tents & Trees", 55, 10);
+
+        kit_draw_text(ctx, KIT_WHITE, app_name, (screenw / 2) - (appNameW / 2), 10);
 
         if (kit_key_pressed(ctx, VK_ESCAPE))
             firstStart = true;
@@ -371,7 +377,7 @@ new_game:
         if (solved)
             kit_draw_text(ctx, KIT_WHITE, solvedText, (screenw / 2) - (solvedTextW / 2), 70);
         else
-            kit_draw_text(ctx, KIT_WHITE, "Tents & Trees", 55, 10);
+            kit_draw_text(ctx, KIT_WHITE, app_name, (screenw / 2) - (appNameW / 2), 10);
 
         int spaceTextW = kit_text_width(ctx->font, "HIT SPACE FOR NEW GAME");
         kit_draw_text(ctx, KIT_WHITE, "HIT SPACE FOR NEW GAME", (screenw / 2) - (spaceTextW / 2), 100);
