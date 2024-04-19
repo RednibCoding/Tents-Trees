@@ -323,7 +323,7 @@ new_game:
         kit_draw_text(ctx, KIT_WHITE, "Tents & Trees", 55, 10);
 
         if (kit_key_pressed(ctx, VK_ESCAPE))
-            exit(0);
+            firstStart = true;
 
         if (kit_key_down(ctx, VK_SHIFT))
         {
