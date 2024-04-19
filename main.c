@@ -129,10 +129,10 @@ void grid_draw(kit_Context *ctx, grid_t *grid)
                 color = kit_rgb(100, 100, 255);
                 break;
             case GRASS:
-                color = kit_rgb(100, 255, 100);
+                color = kit_rgb(140, 255, 140);
                 break;
             case TREE:
-                color = kit_rgb(80, 180, 80);
+                color = kit_rgb(70, 180, 70);
                 break;
             }
             kit_draw_rect(ctx, color, (kit_Rect){x * grid->cellsz + grid->gap * x + grid->x, y * grid->cellsz + grid->gap * y + grid->y, grid->cellsz, grid->cellsz});
