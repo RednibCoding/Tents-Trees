@@ -34,7 +34,7 @@ Tents & Trees uses **kit** for:
 - Window creation
 - Rectangle drawing
 - Text rendering
-- Keyboard input handling
+- Keyboard and mouse input handling
 
 ## Build Instructions
 
