@@ -9,7 +9,7 @@ Your job is to place tents (purple) next to trees (dark green).
 
 Each tent is attached to one tree, there are as many tents as there are trees.
 
-The numbers across the top and down the side tell you how many tents are in the respective row or column.
+The numbers across the bottom and the right side tell you how many tents are in the respective row or column.
 
 A tent can only be found horizontally or vertically adjacent to a tree.
 
