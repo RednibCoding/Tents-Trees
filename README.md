@@ -2,9 +2,8 @@
 
 Tents & Trees puzzle game written in 400 lines of c code.
 
-![](readme/Tents_N_Trees.png)
+![](readme/tents-gameplay.gif)
 
-[tents-gameplay.webm](https://github.com/RednibCoding/Tents-Trees/assets/28296119/68480dfb-db55-44d9-81ca-af1ee6639721)
 
 
 ## Game rules
