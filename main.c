@@ -308,6 +308,9 @@ new_game:
 
     startTime = clock();
 
+    grid_free(grid);
+    grid = grid_new(rows, cols, cellsz, gridx, gridy);
+
     init_game(grid, 0);
 
     bool solutionPeeked = false;
