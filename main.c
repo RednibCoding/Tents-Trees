@@ -113,14 +113,16 @@ void grid_update(kit_Context *ctx, grid_t *grid)
     }
 }
 
-void grid_draw(kit_Context *ctx, grid_t *grid)
+void grid_draw(kit_Context *ctx, grid_t *grid, bool showSolutionGrid)
 {
+    int *cells = showSolutionGrid ? grid->solution : grid->cells;
+
     for (int y = 0; y < grid->rows; y++)
     {
         for (int x = 0; x < grid->cols; x++)
         {
             kit_Color color;
-            switch (grid->cells[y * grid->cols + x])
+            switch (cells[y * grid->cols + x])
             {
             case EMPTY:
                 color = kit_rgb(255, 255, 255);
@@ -300,40 +302,88 @@ int main()
     clock_t startTime, endTime;
     double elapsed;
 
+    bool firstStart = true;
+
 new_game:
 
     startTime = clock();
 
     init_game(grid, 0);
 
-    kit_draw_text(ctx, KIT_WHITE, "Tents & Trees", 55, 10);
+    bool solutionPeeked = false;
+    bool showSolution = false;
+    bool solved = false;
 
     while (kit_step(ctx, &dt))
     {
+        kit_clear(ctx, kit_rgba(0, 0, 0, 5));
+        kit_draw_text(ctx, KIT_WHITE, "Tents & Trees", 55, 10);
+
         if (kit_key_pressed(ctx, VK_ESCAPE))
             break;
 
-        grid_update(ctx, grid);
-        grid_draw(ctx, grid);
-
-        if (check_solution(grid))
+        if (kit_key_down(ctx, VK_SHIFT))
         {
-            endTime = clock();
-            elapsed = (double)(endTime - startTime) / CLOCKS_PER_SEC;
+            solutionPeeked = true;
+            showSolution = true;
+        }
+        else
+        {
+            showSolution = false;
+        }
+
+        grid_update(ctx, grid);
+        grid_draw(ctx, grid, showSolution);
+
+        if (check_solution(grid) || firstStart)
+        {
+
+            if (firstStart)
+            {
+                kit_clear(ctx, KIT_BLACK);
+                firstStart = false;
+            }
+            else
+            {
+                endTime = clock();
+                elapsed = (double)(endTime - startTime) / CLOCKS_PER_SEC;
+                solved = true;
+            }
             break;
         }
     }
 
-    // Display Solved Screen
+    // Display Solved/Start Screen
     while (kit_step(ctx, &dt))
     {
+        kit_clear(ctx, kit_rgba(0, 0, 0, 5));
+        int minutes = (int)elapsed / 60;                             // Get total minutes
+        int seconds = (int)elapsed % 60;                             // Get remaining seconds
+        int milliseconds = (int)((elapsed - ((int)elapsed)) * 1000); // Get milliseconds
+
         char solvedText[100];
-        sprintf(solvedText, "Solved in %.2f seconds!", elapsed);
-        kit_clear(ctx, KIT_BLACK);
+        sprintf(solvedText, "Solved in %dm %ds %dms!", minutes, seconds, milliseconds);
         int solvedTextW = kit_text_width(ctx->font, solvedText);
-        kit_draw_text(ctx, KIT_WHITE, solvedText, (screenw / 2) - (solvedTextW / 2), 70);
-        int spaceTextW = kit_text_width(ctx->font, "SPACE FOR NEW GAME");
-        kit_draw_text(ctx, KIT_WHITE, "SPACE FOR NEW GAME", (screenw / 2) - (spaceTextW / 2), 100);
+
+        if (solved)
+            kit_draw_text(ctx, KIT_WHITE, solvedText, (screenw / 2) - (solvedTextW / 2), 70);
+        else
+            kit_draw_text(ctx, KIT_WHITE, "Tents & Trees", 55, 10);
+
+        int spaceTextW = kit_text_width(ctx->font, "HIT SPACE FOR NEW GAME");
+        kit_draw_text(ctx, KIT_WHITE, "HIT SPACE FOR NEW GAME", (screenw / 2) - (spaceTextW / 2), 100);
+
+        int peekedTextW = kit_text_width(ctx->font, "SOLUTION PEEKED!");
+        int toPeekedTextW = kit_text_width(ctx->font, "SHIFT TO PEEK SOLUTION");
+        if (solutionPeeked)
+        {
+
+            kit_draw_text(ctx, KIT_WHITE, "SOLUTION PEEKED!", (screenw / 2) - (peekedTextW / 2), 130);
+        }
+        else if (!solved)
+        {
+            kit_draw_text(ctx, KIT_WHITE, "SHIFT TO SHOW SOLUTION", (screenw / 2) - (toPeekedTextW / 2), 130);
+        }
 
         if (kit_key_pressed(ctx, VK_ESCAPE))
             break;
