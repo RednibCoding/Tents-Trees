@@ -1,6 +1,6 @@
 # Tents & Trees
 
-Tents & Trees puzzle game written in 350 lines of c code.
+Tents & Trees puzzle game written in 400 lines of c code.
 
 ![](readme/Tents_N_Trees.png)
 
