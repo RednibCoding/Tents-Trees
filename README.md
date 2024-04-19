@@ -18,6 +18,8 @@ Tents are never adjacent to each other, neither vertically, horizontally, nor di
 A tree might be next to two tents, but is only connected to one.
 
 ## Controls
+- **Escape**: Quit game
+- **Shift**: Show solution
 - **Left Mouse Button**: Use this to place a tent (purple).
 - **Right Mouse Button**: Use this to place grass. This visually marks a field, indicating that a tent cannot be placed there. (This is just visually and has now effect game play wise) (light green)
 - **Middle Mouse Button**: Use this to clear the contents of a cell. (white)
