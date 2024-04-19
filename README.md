@@ -3,6 +3,7 @@
 Tents & Trees puzzle game written in 400 lines of c code.
 
 ![](readme/Tents_N_Trees.png)
+![](readme/tents-gameplay.webm)
 
 ## Game rules
 Your job is to place tents (purple) next to trees (dark green).
